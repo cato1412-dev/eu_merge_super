@@ -1,0 +1,35 @@
+name: Download and Merge Super.img
+
+on:
+  workflow_dispatch:
+    inputs:
+      zip_url:
+        description: 'Enter the URL of the ZIP file'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y android-tools-fsutils
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run Python script
+      env:
+        ZIP_URL: ${{ github.event.inputs.zip_url }}
+      run: |
+        python script.py
