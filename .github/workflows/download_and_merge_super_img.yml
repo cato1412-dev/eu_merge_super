@@ -1,6 +1,9 @@
 name: Download and Merge Super.img
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       zip_url:
@@ -14,10 +17,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3 # No need to change unless a new major version is released
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4 # No need to change unless a new major version is released
       with:
         python-version: '3.x'
 
